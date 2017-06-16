@@ -1,0 +1,23 @@
+.panel.panel-default
+  .panel-heading
+    = @question.title
+  .panel-body
+    p= @question.body
+    - if current_user && current_user.author_of?(@question)
+      .delete
+      = link_to 'Delete question', @question, method: :delete, class: 'btn btn-primary'
+    h4 Answers
+    ul.list-group
+    - @question.answers.each do |answer|
+      - if answer.persisted?
+        li.list-group-item = answer.body
+        - if current_user && current_user.author_of?(answer)
+          = link_to 'Delete answer', answer, method: :delete
+    - if user_signed_in?
+      = form_for [@question, @answer] do |f|
+        = render 'common/errors', resource: @answer
+        .form-group
+          = f.label :body, 'Answer'
+          = f.text_field :body, class: 'form-control'
+        .form-group
+          = f.submit 'Create answer', class: 'btn btn-primary'
