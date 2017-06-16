@@ -34,6 +34,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'slim-rails'
+gem 'devise'
+gem 'therubyracer'
+gem 'twitter-bootstrap-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -42,6 +45,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rails-controller-testing'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -60,6 +64,7 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
