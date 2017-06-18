@@ -13,17 +13,18 @@ class AnswersController < ApplicationController
       redirect_to @question
     else
       flash[:notice] = 'Error prevent answer from saving.'
-      redirect_to @question
+      render 'questions/show'
     end
   end
 
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Your answer successfully deleted'
+      flash[:notice] = 'Your answer successfully deleted'
     else
-      redirect_to questions_path, notice: 'You do not have permission to delete this answer'
+      flash[:notice] = 'You do not have permission to delete this answer'
     end
+    redirect_to question_path(@answer.question)
   end
 
 

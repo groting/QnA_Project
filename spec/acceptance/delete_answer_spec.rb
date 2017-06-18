@@ -9,7 +9,7 @@ feature 'Author deletes answer', %q{
   given(:user_with_answers) { create(:user_with_answers) }
   given(:answer) { create(:answer) }
 
-    scenario 'Author tries to delete his answer' do
+  scenario 'Author tries to delete his answer' do
     sign_in(user_with_answers)
 
     visit question_path(user_with_answers.answers.first.question)
