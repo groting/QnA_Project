@@ -30,6 +30,6 @@ feature 'Create answer', %q{
   
   scenario 'Unauthenticated user answers the question' do
     visit question_path(question)
-    expect(page).to have_no_selector('input')
+    expect(page).to have_no_content 'Create answer'
   end
 end

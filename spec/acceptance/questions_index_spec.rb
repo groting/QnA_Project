@@ -5,7 +5,7 @@ feature 'Questions list', %q{
   the user should have the opportunity
   to view the list of questions
 } do
-  given!(:questions) { create_list(:question, 2) }
+  given!(:questions) { create_list(:question, 4) }
   given(:user) { create(:user) }
 
   scenario 'Authenticated user views list of questions' do
@@ -24,5 +24,8 @@ feature 'Questions list', %q{
 
     expect(page).to have_content questions.first.title
     expect(page).to have_content questions.last.title
+    questions.each do |question|
+      expect(page).to have_content question.title
+    end
   end
 end
