@@ -21,8 +21,8 @@ feature 'View question', %q{
   def visit_and_check_question
     visit question_path(question)
 
-    expect(page).to have_content 'MyString'
-    expect(page).to have_content 'MyText'
+    expect(page).to have_content 'QuestionTitle'
+    expect(page).to have_content 'QuestionBody'
     question.answers.each do |answer|
       expect(page).to have_content answer.body
     end

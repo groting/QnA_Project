@@ -1,11 +1,7 @@
 FactoryGirl.define do
-  sequence :title do |n|
-    "MyString#{n}"
-  end
-
   factory :question do
-    title
-    body 'MyText'
+    sequence(:title) { |n| "QuestionTitle#{n}" }
+    sequence(:body) { |n| "QuestionBody#{n}" }
     user
 
     factory :invalid_question do
@@ -21,6 +17,6 @@ FactoryGirl.define do
       after(:create) do |question, evaluator|
         create_list(:answer, evaluator.answers_count, question: question)
       end
-    end
+    end 
   end
 end
