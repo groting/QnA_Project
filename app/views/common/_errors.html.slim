@@ -1,4 +1,4 @@
-- if resource.invalid?
+- if resource.errors.any?
     ul
     - resource.errors.full_messages.each do |error|
       li= error

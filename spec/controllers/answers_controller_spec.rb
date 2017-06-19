@@ -11,34 +11,34 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'associates answer with the user' do
         expect { post :create, params: { question_id: question,
-                                answer: attributes_for(:answer) } }
+                                answer: attributes_for(:answer) }, format: :js }
           .to change(@user.answers, :count).by(1)
       end
 
       it 'associates answer with the question' do
         expect { post :create, params: { question_id: question,
-                                answer: attributes_for(:answer) } }
+                                answer: attributes_for(:answer) }, format: :js }
           .to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to question#show view' do
+      it 'render create template' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:answer) }
-        expect(response).to redirect_to question_path(assigns(:answer).question)
+                                answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :create
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
         expect { post :create, params: { question_id: question,
-                                         answer: attributes_for(:invalid_answer) } }
+                                         answer: attributes_for(:invalid_answer) }, format: :js }
           .to_not change(Answer, :count)
       end
 
-      it 'render question show view' do
+      it 'render question/show template' do
         post :create, params: { question_id: question,
                                 answer: attributes_for(:invalid_answer) }
-        expect(response).to render_template('questions/show')
+        expect(response).to render_template 'questions/show'
       end
     end
   end
