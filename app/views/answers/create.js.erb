@@ -1,2 +1,3 @@
-$('.answers').append('<%= j render @answer %>');
+$('.answers').append('<%= j render @answer if @answer.valid? %>');
+$('.answer_errors').html('<%= render 'common/errors', resource: @answer %>');
 $('#answer_body').val(''); 
