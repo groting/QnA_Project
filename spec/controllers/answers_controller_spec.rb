@@ -35,10 +35,10 @@ RSpec.describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-      it 'render question/show template' do
+      it 'render create template' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:invalid_answer) }
-        expect(response).to render_template 'questions/show'
+                                answer: attributes_for(:invalid_answer), format: :js }
+        expect(response).to render_template 'create'
       end
     end
   end

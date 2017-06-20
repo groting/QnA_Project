@@ -23,4 +23,12 @@ feature 'Create answer', %q{
     visit question_path(question)
     expect(page).to have_no_content 'Create answer'
   end
+
+  scenario 'Authenticated user tries to create answer with blank body field', js: true do
+    sign_in(user)
+    visit question_path(question)
+    click_on 'Create answer'
+
+    expect(page).to have_content "Body can't be blank"
+  end
 end
