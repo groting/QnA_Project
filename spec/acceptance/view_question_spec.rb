@@ -1,8 +1,8 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'View question', %q{
   In order to find an answer to question
-  I need to be able to viiew question
+  I need to be able to view question
   and answers to that question
 } do
   given(:user) { create(:user) }

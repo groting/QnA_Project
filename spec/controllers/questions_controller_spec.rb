@@ -42,19 +42,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'GET #edit' do
-    sign_in_user
-    before { get :edit, params: { id: question } }
-
-    it 'assigns requested question to @question' do
-      expect(assigns(:question)).to eq question
-    end
-
-    it 'renders edit view' do
-      expect(response).to render_template :edit
-    end
-  end
-
   describe 'POST #create' do
     sign_in_user
     context 'with valid attributes' do
@@ -90,13 +77,13 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, params: { id: users_question,
-          question: attributes_for(:question) }
+          question: attributes_for(:question) }, format: :js
         expect(assigns(:question)).to eq users_question
       end
 
       it 'change question attributes' do
         patch :update, params: { id: users_question,
-          question: { title: 'new_title', body: 'new_body' } }
+          question: { title: 'new_title', body: 'new_body' } }, format: :js
         users_question.reload
         expect(users_question.title).to eq 'new_title'
         expect(users_question.body).to eq 'new_body'
@@ -104,8 +91,8 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to updated @question' do
         patch :update, params: { id: users_question,
-          question: attributes_for(:question) }
-        expect(response).to redirect_to users_question
+          question: attributes_for(:question) }, format: :js
+        expect(response).to render_template :update
       end
     end
 
@@ -114,7 +101,7 @@ RSpec.describe QuestionsController, type: :controller do
       let(:body) { users_question.body }
       before do
         patch :update, params: { id: users_question,
-          question: { title: 'new_title', body: nil } }
+          question: { title: 'new_title', body: nil } }, format: :js
       end
       it 'does not change @question attributes' do
         users_question.reload
@@ -123,7 +110,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 're-renders edit view' do
-        expect(response).to render_template :edit
+        expect(response).to render_template :update
       end
     end
 
@@ -132,7 +119,7 @@ RSpec.describe QuestionsController, type: :controller do
       let(:body) { question.body }
       before do
         patch :update, params: { id: question,
-          question: { title: 'new_title', body: 'new_body' } }
+          question: { title: 'new_title', body: 'new_body' } }, format: :js
       end
       it 'does not update question attributes' do
         question.reload
@@ -142,6 +129,10 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to index view' do
         expect(response).to redirect_to questions_path
+      end
+
+      it 'shows flash message' do
+        expect(flash[:alert]).to eq('You do not have permission to update this question')
       end
     end
   end

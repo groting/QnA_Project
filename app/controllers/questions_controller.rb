@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :update, :destroy]
   
   def index
     @questions = Question.all
@@ -12,9 +12,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.new
-  end
-
-  def edit
   end
 
   def create
@@ -30,14 +27,10 @@ class QuestionsController < ApplicationController
 
   def update
     if current_user.author_of?(@question)
-      if @question.update(question_params)
-        redirect_to @question
-      else
-        render :edit
-      end
+      @question.update(question_params)
     else
       redirect_to questions_path,
-      notice: 'You do not have permission to update this question'
+      alert: 'You do not have permission to update this question'
     end
   end
 

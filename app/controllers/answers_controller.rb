@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: [:destroy]
+  before_action :set_answer, only: [:destroy, :update, :select_best]
   before_action :set_question, only: [:create]
   
 
@@ -10,14 +10,30 @@ class AnswersController < ApplicationController
     @answer.save
   end
 
+  def update
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+    else
+      redirect_to question_path(@answer.question), alert: 'You do not have permission to update this answer'
+    end
+  end
+
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      flash[:notice] = 'Your answer successfully deleted'
+      flash[:alert] = 'Your answer successfully deleted'   
     else
-      flash[:notice] = 'You do not have permission to delete this answer'
+      redirect_to question_path(@answer.question), alert: 'You do not have permission to delete this answer'
+    end 
+  end
+
+  def select_best
+    if current_user.author_of?(@answer.question)
+      @answer.select_best
+    else
+      redirect_to question_path(@answer.question),
+      alert: 'You do not have permission to select best answer'
     end
-    redirect_to question_path(@answer.question)
   end
 
 
