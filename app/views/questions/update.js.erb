@@ -1,0 +1,8 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each  do |message| %>
+    $('.question-errors').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('div.panel-heading').html('<%= j @question.title %>');
+  $('div.question-body').html('<%= j @question.body %>')
+<% end %>

@@ -2,18 +2,33 @@
   .panel-heading
     = @question.title
   .panel-body
-    p= @question.body
-    - if current_user && current_user.author_of?(@question)
-      .delete
-      = link_to 'Delete question', @question, method: :delete, class: 'btn btn-primary'
+    .question
+      .question-body
+        = @question.body
+      - if current_user && current_user.author_of?(@question)
+        .edit-delete
+          = link_to 'Edit question', '', class: 'edit-question-link',
+            data: { question_id: @question.id }
+          '
+          = link_to 'Delete question', @question, method: :delete
+          = form_for @question, remote: true, html: { id: 'edit-question' } do |f|
+            .form-group
+              = f.label :title, 'Question tilte'
+              = f.text_field :title, class: 'form-control'
+            .form-group
+              = f.label :body, 'Question body'
+              = f.text_area :body, class: 'form-control'
+            .form-group
+              = f.submit 'Save question', class: 'btn btn-primary', id: 'question-update-submit'
     h4 Answers
     .answers
-      .answer_errors
-      = render @question.answers        
+      ul.answers-list
+        = render @question.answers
     - if user_signed_in?
       = form_for [@question, @answer], remote: true do |f|
+        .answer-errors
         .form-group
           = f.label :body, 'Answer'
-          = f.text_field :body, class: 'form-control'
+          = f.text_area :body, class: 'form-control'
         .form-group
           = f.submit 'Create answer', class: 'btn btn-primary'
