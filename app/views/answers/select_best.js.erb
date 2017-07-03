@@ -1,2 +1,3 @@
 $('.answers-list').prepend($('#answer-<%= @answer.id %>'));
 $('#answer-<%= @answer.id %> li').prepend($('.best-answer-bage'));
+$('#answer-<%= @answer.id %>').html('<%= j render @answer %>');

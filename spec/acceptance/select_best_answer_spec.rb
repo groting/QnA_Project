@@ -26,7 +26,11 @@ feature 'Select best answer', %q{
     scenario 'Author tries to choose the best answer', js: true do
       within "#answer-#{question.answers.last.id}" do
         click_on 'The best' 
-        expect(page).to have_content 'The best answer' 
+        expect(page).to have_content 'The best answer'
+      end
+
+      within(first(".answers-list li")) do
+        expect(page).to have_content "AnswerText#{question.answers.last.id}"
       end
     end
   end
