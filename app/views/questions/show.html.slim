@@ -5,7 +5,7 @@
     .question
       .question-body
         = @question.body
-      - if current_user && current_user.author_of?(@question)
+      - if current_user&.author_of?(@question)
         .edit-delete
           = link_to 'Edit question', '', class: 'edit-question-link',
             data: { question_id: @question.id }
@@ -23,7 +23,7 @@
     h4 Answers
     .answers
       ul.answers-list
-        = render @question.answers
+        = render @question.answers.best_order
     - if user_signed_in?
       = form_for [@question, @answer], remote: true do |f|
         .answer-errors

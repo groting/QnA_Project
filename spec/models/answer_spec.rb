@@ -6,23 +6,22 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body}
   it { should have_db_index(:question_id) }
 
-  let(:question) { create(:question_with_answers) }
-  let(:answer) { question.answers.first }
-  let(:new_best_answer) { question.answers.last }
+  let(:question) { create :question }
+  let!(:current_best) { create :best_answer, question: question }
+  let!(:new_best) { create :answer, question: question }
 
-  describe '#set_best' do
+  describe '#select_best' do
     before do
-      answer.select_best
+      new_best.select_best
     end
+
     it 'should set best answer' do
-      answer.reload
-      expect(answer.best).to be_truthy
+      expect(new_best).to be_best
     end
 
     it 'should remove best mark from old best answer' do
-      new_best_answer.select_best
-      answer.reload
-      expect(answer.best).to be_falsey
+      current_best.reload
+      expect(current_best).to_not be_best
     end
   end
 end

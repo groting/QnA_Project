@@ -6,11 +6,11 @@ div id="answer-#{answer.id}"
     = answer.body
 
     .delete-edit-answer
-      - if current_user && current_user.author_of?(answer.question)
+      - if current_user&.author_of?(answer.question)
         = link_to 'The best', select_best_answer_path(answer), remote: true, method: :patch,
           class: 'best-answer-link'
       '
-      - if current_user && current_user.author_of?(answer)
+      - if current_user&.author_of?(answer)
         = link_to 'Delete answer', answer, remote: true, method: :delete, class: 'delete-answer-link',
           data: { answer_id: answer.id }
         '

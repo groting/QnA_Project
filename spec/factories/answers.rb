@@ -5,6 +5,9 @@ FactoryGirl.define do
     user
     factory :invalid_answer do
       body nil
-    end  
+    end 
+    factory :best_answer do
+      best true
+    end 
   end
 end

@@ -1,2 +1,2 @@
-$('.answers-list').html('<%= j render @answer.question.answers %>');
-$('.best-answer-bage').closest('div').prependTo('.answers-list')
+$('.answers-list').prepend($('#answer-<%= @answer.id %>'));
+$('#answer-<%= @answer.id %> li').prepend($('.best-answer-bage'));

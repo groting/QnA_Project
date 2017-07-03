@@ -11,11 +11,12 @@ feature 'Select best answer', %q{
   let(:another_user) { create(:user) }
   let(:question) { create(:question_with_answers, user: user) }
 
-  describe 'Authenticated user' do
+  context 'Author of answer' do
     before do
       sign_in(user)
       visit question_path(question)
     end
+
     scenario 'Author sees link This answer is the answer' do
       within "#answer-#{question.answers.first.id}" do
         expect(page).to have_link 'The best'
@@ -23,9 +24,9 @@ feature 'Select best answer', %q{
     end
 
     scenario 'Author tries to choose the best answer', js: true do
-      within "#answer-#{question.answers.first.id}" do
-        click_on 'The best'
-        expect(page).to have_content 'best answer'
+      within "#answer-#{question.answers.last.id}" do
+        click_on 'The best' 
+        expect(page).to have_content 'The best answer' 
       end
     end
   end

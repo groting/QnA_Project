@@ -127,50 +127,56 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #select_best' do
-    sign_in_user
 
-    context 'author of question tries to set best flag to answer' do
-      let!(:users_question) { create(:question_with_answers, user: @user) }
-      it 'set best flag to answer' do
-        patch :select_best, params: { id: users_question.answers.first }, format: :js
-        expect(assigns(:answer).best).to eq true
-      end
-    end
+    context 'authenticated user tries to set best flag to answer' do
+      sign_in_user
 
-    context 'another user tries to set best flag to answer' do
-      let(:question) { create(:question_with_answers) }
-      before do
-        patch :select_best, params: { id: question.answers.first }, format: :js
-      end
-      it 'should not set best flag to answer' do
-        expect(assigns(:answer).best).to eq false
+      context 'author of question tries to set best flag to answer' do
+        
+        let!(:users_question) { create(:question_with_answers, user: @user) }
+
+        it 'set best flag to answer' do
+          patch :select_best, params: { id: users_question.answers.first }, format: :js
+          expect(assigns(:answer).best).to eq true
+        end
       end
 
-      it 'redirects to question show view' do
-        expect(response).to redirect_to question_path(question)
-      end
+      context 'another user tries to set best flag to answer' do
 
-      it 'shows flash message' do
-        expect(flash[:alert]).to eq('You do not have permission to select best answer')
+        let(:question) { create(:question_with_answers) }
+
+        before do
+          patch :select_best, params: { id: question.answers.first }, format: :js
+        end
+
+        it 'should not set best flag to answer' do
+          expect(assigns(:answer).best).to eq false
+        end
+
+        it 'redirects to question show view' do
+          expect(response).to redirect_to question_path(question)
+        end
+
+        it 'shows flash message' do
+          expect(flash[:alert]).to eq('You do not have permission to select best answer')
+        end
       end
     end
 
     context 'unauthenticated user tries to set best flag to answer' do
+
       let(:question) { create(:question_with_answers) }
+
       before do
         patch :select_best, params: { id: question.answers.first }, format: :js
       end
+
       it 'should not set best flag to answer' do
-        sign_out(@user)
         expect(question.answers.first.best).to eq false
       end
 
-      it 'redirects to question show view' do
-        expect(response).to redirect_to question_path(question)
-      end
-
-      it 'shows flash message' do
-        expect(flash[:alert]).to eq('You do not have permission to select best answer')
+      it 'redirects to error page' do
+        expect(response.status).to eq(401)
       end
     end
   end
