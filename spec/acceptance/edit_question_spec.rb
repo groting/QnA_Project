@@ -15,17 +15,20 @@ feature 'Question editing', %q{
     expect(page).to_not have_link 'Edit'
   end
 
-  describe 'Authenticated user' do
+  context 'Authenticated user' do
     before do
       sign_in(user)
       visit question_path(question)
     end
+
     scenario 'sees question edit link' do
       within '.question' do
         expect(page).to have_link 'Edit question'
       end
     end
+
     scenario 'tries to edit his question', js: true do
+      
       within '.question' do
         click_on 'Edit question'
         fill_in 'question_title', with: 'edited question title'
@@ -38,12 +41,15 @@ feature 'Question editing', %q{
         expect(page).to_not have_selector 'textarea'
         expect(page).to have_link 'Edit question'
       end
+
       within '.panel-heading' do
         expect(page).to_not have_content question.title
         expect(page).to have_content 'edited question title'
       end
     end
+
     let(:another_user) { create(:user) }
+
     scenario "tries to edit other user's question", js: true do
       click_on 'Sign out'
       sign_in(another_user)
