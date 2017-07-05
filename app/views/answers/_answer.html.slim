@@ -5,6 +5,9 @@ div id="answer-#{answer.id}"
       span.badge.best-answer-bage The best answer
     = answer.body
 
+    ul.answer-attachments
+      = render 'common/attachments', resource: answer
+
     .delete-edit-answer
       - if current_user&.author_of?(answer.question)
         = link_to 'The best', select_best_answer_path(answer), remote: true, method: :patch,
@@ -19,5 +22,10 @@ div id="answer-#{answer.id}"
           .form-group
             = f.label :body, 'Answer'
             = f.text_area :body, class: 'form-control'
+          .form-group
+            = f.fields_for :attachments do |a|
+              = render 'common/attachment_fields', f: a
+            .links
+              = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'
           .form-group
             = f.submit 'Save', class: 'btn btn-primary'
