@@ -4,9 +4,9 @@
   .panel-body
     .question
       .question-body
-        = @question.body
-        ul.question-attachments
-          = render 'common/attachments', resource: @question
+        = render @question, vote: @question_vote
+      ul.question-attachments
+        = render 'common/attachments', resource: @question
       - if current_user&.author_of?(@question)
         .edit-delete
           = link_to 'Edit question', '', class: 'edit-question-link',

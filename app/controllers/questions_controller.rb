@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  include Voted
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :update, :destroy]
   
@@ -7,6 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @question_vote = @question.votes.where(user: current_user).first
     @answer = Answer.new
     @answer.attachments.build
   end
