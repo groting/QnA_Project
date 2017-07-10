@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'Answer editing', %q{
   In order to fix mistake

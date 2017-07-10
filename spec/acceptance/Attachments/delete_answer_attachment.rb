@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper.rb'
+require_relative '../acceptance_helper.rb'
 
 feature 'Deletes files from answer', %q{
   In order to fix mistake

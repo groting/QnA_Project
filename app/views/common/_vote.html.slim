@@ -1,0 +1,20 @@
+- if current_user && !current_user.author_of?(resource)
+  = form_tag "/#{resource.class.name.pluralize.underscore}/#{resource.id}/vote",
+    { class: 'vote-form', id: "vote-#{resource.class.name.underscore}-#{resource.id}",
+      remote: true, method: :patch, style: "display: #{vote ? 'none' : 'block'}" }
+    .form-group
+      .radio-inline
+        = radio_button_tag(:vote, 'like', class: 'form-control')
+        = label_tag(:vote_like, 'Like')
+      .radio-inline
+        = radio_button_tag(:vote, 'dislike')
+        = label_tag(:vote_dislike, 'Dislike')
+    .form-group
+      = submit_tag 'Vote', class: 'btn btn-primary'
+  = form_tag "/#{resource.class.name.pluralize.underscore}/#{resource.id}/vote",
+    { class: 'clear-vote-form', id: "clear-vote-#{resource.class.name.underscore}-#{resource.id}",
+      remote: true, method: :patch,
+        style: "display: #{(vote && current_user.author_of?(vote)) ? 'block' : 'none'}" }
+    .form-group
+      = hidden_field_tag :vote, 'clear_vote'
+      = submit_tag 'Recall vote', class: 'btn btn-primary'

@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'User sign in', %q{
   In oder to ask questions

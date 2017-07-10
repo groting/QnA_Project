@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'View question', %q{
   In order to find an answer to question

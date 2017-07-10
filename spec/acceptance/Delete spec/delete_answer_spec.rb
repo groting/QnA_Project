@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'Author deletes answer', %q{
   Author can delete his answer

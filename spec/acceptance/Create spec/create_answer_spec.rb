@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'Create answer', %q{
   In order to answer to question

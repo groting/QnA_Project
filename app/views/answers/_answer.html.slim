@@ -1,10 +1,15 @@
 div id="answer-#{answer.id}"
-
   li.list-group-item
+    div id="rate-answer-#{answer.id}"
+      = answer.rating
     - if answer.best
       span.badge.best-answer-bage The best answer
     = answer.body
-
+    span class="pull-right like-badge" id="vote-answer-#{answer.id}"
+      - if current_user && vote(answer)
+        | You've #{vote(answer).show_value}d it
+    .vote
+      = render 'common/vote', resource: answer, vote: vote(answer)
     ul.answer-attachments
       = render 'common/attachments', resource: answer
 

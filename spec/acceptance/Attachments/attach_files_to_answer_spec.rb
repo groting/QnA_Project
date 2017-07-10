@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper.rb'
+require_relative '../acceptance_helper.rb'
 
 feature 'Add files to answer', %q{
   In order to illustrate my answer
@@ -36,7 +36,7 @@ feature 'Add files to answer', %q{
       visit question_path(question)
 
       within '.answers' do
-        expect(page).to have_no_selector('input')
+        expect(page).to have_no_selector('input[type="file"]')
       end
     end
 
@@ -45,7 +45,7 @@ feature 'Add files to answer', %q{
       visit question_path(question)
 
       within '.answers' do
-        expect(page).to have_no_selector('input')
+        expect(page).to have_no_selector('input[type="file"]')
       end
     end
   end
