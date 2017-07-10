@@ -30,7 +30,7 @@ feature 'Select best answer', %q{
       end
 
       within(first(".answers-list li")) do
-        expect(page).to have_content "AnswerText#{question.answers.last.id}"
+        expect(page).to have_content question.answers.last.body
       end
     end
   end
