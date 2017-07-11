@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative 'concerns/votable_spec.rb'
+require_relative 'concerns/votable.rb'
 
 RSpec.describe Answer, type: :model do
   it { should belong_to(:question)}

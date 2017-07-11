@@ -14,8 +14,7 @@ feature 'Delete vote and re-vote for question', %q{
     sign_in(user)
     visit question_path(question)
     within '.question' do
-      choose 'Like'
-      click_on 'Vote'
+      click_on 'Dislike'
     end
   end
 
@@ -25,9 +24,8 @@ feature 'Delete vote and re-vote for question', %q{
       within "#rate-question-#{question.id}" do
         expect(page).to have_content "0"
       end
-      expect(page).to have_no_content "You've liked it"
-      expect(page).to have_no_button 'Recall vote'
-      expect(page).to have_button 'Vote'
+      expect(page).to have_no_link 'Recall vote'
+      expect(page).to have_link 'Dislike'
     end
   end
 
@@ -36,7 +34,7 @@ feature 'Delete vote and re-vote for question', %q{
     sign_in(another_user)
     visit question_path(question)
     within '.question' do
-      expect(page).to have_no_button 'Recall vote'
+      expect(page).to have_no_link 'Recall vote'
     end
   end
 
@@ -44,7 +42,7 @@ feature 'Delete vote and re-vote for question', %q{
     click_on 'Sign out'
     visit question_path(question)
     within '.question' do
-      expect(page).to have_no_button 'Recall vote'
+      expect(page).to have_no_link 'Recall vote'
     end
   end
 end

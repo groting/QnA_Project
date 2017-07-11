@@ -6,10 +6,10 @@ div id="answer-#{answer.id}"
       span.badge.best-answer-bage The best answer
     = answer.body
     span class="pull-right like-badge" id="vote-answer-#{answer.id}"
-      - if current_user && vote(answer)
-        | You've #{vote(answer).show_value}d it
+      - if current_user && answer.vote(current_user)
+        | You've #{answer.vote(current_user).show_value}d it
     .vote
-      = render 'common/vote', resource: answer, vote: vote(answer)
+      = render 'common/vote', resource: answer, vote: answer.vote(current_user)
     ul.answer-attachments
       = render 'common/attachments', resource: answer
 

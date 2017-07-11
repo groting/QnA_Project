@@ -43,6 +43,6 @@ module Votable
   private
 
   def voted_by?(user)
-    user.votes.exists?(votable_id: id, votable_type: self.class.name)
+    user.votes.exists?(votable: self)
   end
 end
