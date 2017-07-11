@@ -14,13 +14,11 @@ feature 'Vote for question', %q{
     sign_in(user)
     visit question_path(question)
     within '.question' do
-      choose 'Like'
-      click_on 'Vote'
+      click_on 'Like'
       within "#rate-question-#{question.id}" do
         expect(page).to have_content "1"
       end
-      expect(page).to have_content "You've liked it"
-      expect(page).to have_button 'Recall vote'
+      expect(page).to have_link 'Recall vote'
     end
   end
 
@@ -28,13 +26,11 @@ feature 'Vote for question', %q{
     sign_in(user)
     visit question_path(question)
     within '.question' do
-      choose 'Dislike'
-      click_on 'Vote'
+      click_on 'Dislike'
       within "#rate-question-#{question.id}" do
         expect(page).to have_content "-1"
       end
-      expect(page).to have_content "You've disliked it"
-      expect(page).to have_button 'Recall vote'
+      expect(page).to have_link 'Recall vote'
     end
   end
 
@@ -42,9 +38,8 @@ feature 'Vote for question', %q{
     sign_in(user)
     visit question_path(question)
     within '.question' do
-      choose 'Like'
-      click_on 'Vote'
-      expect(page).to have_no_button 'Vote'
+      click_on 'Like'
+      expect(page).to have_no_link 'Like'
     end
   end
 
@@ -52,14 +47,14 @@ feature 'Vote for question', %q{
     sign_in(user)
     visit question_path(users_question)
     within '.question' do
-      expect(page).to have_no_button 'Vote'
+      expect(page).to have_no_link 'Like'
     end
   end
 
   scenario 'unauthenticated user tries to vote for question' do
     visit question_path(question)
     within '.question' do
-      expect(page).to have_no_button 'Vote'
+      expect(page).to have_no_link 'Like'
     end
   end
 end

@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   concern :votable do
-    patch :vote, on: :member
+    patch :like, on: :member
+    patch :dislike, on: :member
+    patch :clear_vote, on: :member
   end
 
   resources :questions do

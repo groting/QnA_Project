@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative 'concerns/voted_spec.rb'
+require_relative 'concerns/voted.rb'
 
 RSpec.describe AnswersController, type: :controller do
   let!(:question) { create(:question) }
