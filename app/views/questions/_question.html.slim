@@ -2,7 +2,7 @@ div id="rate-question-#{question.id}"
   = question.rating
 = question.body
 span class="pull-right like-badge" id="vote-question-#{question.id}"
-  - if current_user && vote
-    | You've #{vote.show_value}d it
+  - if current_user && question.vote(current_user)
+    | You've #{question.vote(current_user).show_value}d it
 .vote
-  = render 'common/vote', resource: question, vote: vote
+  = render 'common/vote', resource: question, vote: question.vote(current_user)
