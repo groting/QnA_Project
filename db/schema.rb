@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20170710152212) do
     t.boolean "best", default: false
     t.integer "rating", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
-    t.index ["rating"], name: "index_answers_on_rating"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
@@ -44,7 +43,6 @@ ActiveRecord::Schema.define(version: 20170710152212) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.integer "rating", default: 0
-    t.index ["rating"], name: "index_questions_on_rating"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 

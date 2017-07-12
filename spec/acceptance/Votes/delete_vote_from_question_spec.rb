@@ -11,14 +11,12 @@ feature 'Delete vote and re-vote for question', %q{
   given!(:another_user) { create(:user) }
 
   background do
-    sign_in(user)
-    visit question_path(question)
-    within '.question' do
-      click_on 'Dislike'
-    end
+    question.like(user)
   end
 
   scenario 'authenticated user delete vote from question', js: true do
+    sign_in(user)
+    visit question_path(question)
     within '.question' do
       click_on 'Recall vote'
       within "#rate-question-#{question.id}" do
@@ -30,7 +28,6 @@ feature 'Delete vote and re-vote for question', %q{
   end
 
   scenario 'anorher user tries to delete vote from question', js: true do
-    click_on 'Sign out'
     sign_in(another_user)
     visit question_path(question)
     within '.question' do
@@ -39,7 +36,6 @@ feature 'Delete vote and re-vote for question', %q{
   end
 
   scenario 'unauthenticated user tries to delete vote from question', js: true do
-    click_on 'Sign out'
     visit question_path(question)
     within '.question' do
       expect(page).to have_no_link 'Recall vote'
