@@ -41,7 +41,7 @@ module Voted
           { votable: @votable,
             resource: controller_name.singularize ,
             error: "You do not have permission to vote for this #{controller_name.singularize}" },
-            status: :forbidden }
+                      status: :forbidden }
         
       end
     end
