@@ -1,0 +1,8 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each  do |message| %>
+    $('.comment-errors').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('#<%=@commentable.class.name.underscore%>-comments-<%=@commentable.id%>').append('<%= j render @comment %>');
+  $('#comment_body').val('');
+<% end %>

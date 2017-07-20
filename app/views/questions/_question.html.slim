@@ -6,3 +6,5 @@ span class="pull-right like-badge" id="vote-question-#{question.id}"
     | You've #{vote.show_value}d it
 .vote
   = render 'common/vote', resource: question, vote: vote
+div id="question-comments-#{question.id}" class = "question-comments"
+  = render 'common/comments', resource: question

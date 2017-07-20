@@ -1,0 +1,12 @@
+p Comments:
+= render resource.comments
+
+- if user_signed_in?
+  = form_for [resource, resource.comments.build], remote: true, 
+  url: polymorphic_url(resource, action: :create_comment), method: "post" do |f|
+    .comment-errors
+    .form-group
+      = f.label :body, "Comment body"    
+      = f.text_area :body, class: 'form-control'
+    .form-group
+      = f.submit 'Save comment', class: 'btn btn-primary'

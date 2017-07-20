@@ -12,7 +12,8 @@ div id="answer-#{answer.id}"
       = render 'common/vote', resource: answer, vote: answer.vote(current_user)
     ul.answer-attachments
       = render 'common/attachments', resource: answer
-
+    div class="answer-comments" id="answer-comments-#{answer.id}"
+      = render 'common/comments', resource: answer
     .delete-edit-answer
       - if current_user&.author_of?(answer.question)
         = link_to 'The best', select_best_answer_path(answer), remote: true, method: :patch,
