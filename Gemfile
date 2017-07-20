@@ -41,6 +41,8 @@ gem 'twitter-bootstrap-rails'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+gem 'skim'
+gem 'gon'
 
 
 group :development, :test do
