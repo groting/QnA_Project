@@ -3,6 +3,7 @@ module Commented
 
     included do
     before_action :set_commentable, only: [:create_comment]
+    after_action  :stream_comment,  only: [:create_comment]
     end
 
     def create_comment
@@ -25,4 +26,13 @@ module Commented
     def comment_params
       params.require(:comment).permit(:body)
     end
+
+    def stream_comment
+    return if @comment.errors.any?
+    commentable = @comment.commentable
+    type = commentable.class
+    id   = commentable.id
+    CommentsChannel.broadcast_to "comment/#{type}-#{id}",
+      ApplicationController.render(json: @comment)
+  end
 end

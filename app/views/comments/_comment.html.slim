@@ -1,4 +1,4 @@
-div id="comment-#{comment.id}"
+.comment id="comment-#{comment.id}"
   li = comment.body
   - if current_user&.author_of?(comment)
     = link_to 'delete comment', comment, remote: true, method: :delete

@@ -1,9 +1,20 @@
-App.comments = App.cable.subscriptions.create "CommentsChannel",
-  connected: ->
-    # Called when the subscription is ready for use on the server
+$(document).on 'turbolinks:load', ->
+  commentables = $("[data-commentable-id][data-commentable-type]")
+  return if !commentables
 
-  disconnected: ->
-    # Called when the subscription has been terminated by the server
+  commentables.each (i) ->
+    commentable = $(commentables[i])
+    id = commentable.data('commentableId')
+    type = commentable.data('commentableType')
 
-  received: (data) ->
-    # Called when there's incoming data on the websocket for this channel
+    App['comments' + type + id] =
+      App.cable.subscriptions.create {
+        channel: "CommentsChannel",
+        commentable_id:   id,
+        commentable_type: type,
+      }, {
+
+      received: (data) ->
+        comment = $.parseJSON(data)
+        commentable.append(JST["comment"]({id: comment.id, body: comment.body}))
+      }

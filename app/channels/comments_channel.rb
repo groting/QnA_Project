@@ -1,5 +1,7 @@
 class CommentsChannel < ApplicationCable::Channel
-  def follow(data)
-    # stream_from "some_channel"
+  def subscribed
+    type = params[:commentable_type]
+    id   = params[:commentable_id]
+    stream_from "comments:comment/#{type}-#{id}"
   end
 end
