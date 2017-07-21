@@ -1,9 +1,13 @@
-App.answers = App.cable.subscriptions.create "AnswersChannel",
-  connected: ->
-    # Called when the subscription is ready for use on the server
+App.cable.subscriptions.create "AnswersChannel", 
+    connected: ->
+      @follow()
 
-  disconnected: ->
-    # Called when the subscription has been terminated by the server
+    follow: ->
+      questionId = $(".question").data("id")
+      @perform('follow', question_id: questionId)
 
-  received: (data) ->
-    # Called when there's incoming data on the websocket for this channel
+    received: (data) ->
+      json = $.parseJSON(data)
+      answer = json.answer
+      question = json.question
+      $('.answers-list').append(JST["answer"]({answer: answer, question: question}))
