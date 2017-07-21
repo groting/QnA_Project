@@ -13,8 +13,8 @@
           .vote-form [id = "vote-answer-#{@answer.id}", style = "display: #{vote ? 'none' : 'block'}"]
             ul
               li  
-                a href="../answers/#{@answer.id}/like"
+                a href="../answers/#{@answer.id}/like" data-remote='true' Like
               li  
-                a href="../answers/#{@answer.id}/dislike"
+                a href="../answers/#{@answer.id}/dislike" data-remote='true' Dislike
           .cancel-vote-form [id = "clear-vote-answer-#{@answer.id}", style = "display: #{(vote && gon.current_user.author_of?(vote)) ? 'block' : 'none'}"]
-            a href="../answers/#{@answer.id}/cancel_vote"
+            a href="../answers/#{@answer.id}/cancel_vote" data-remote='true' Clear Vote

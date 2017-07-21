@@ -49,15 +49,12 @@ feature 'Create comment', %q{
 
       Capybara.using_session('user') do
         within "#answer-#{answer.id}" do
-          click_on 'New comment'
           fill_in 'Comment body', with: 'Text text'
           click_on 'Save comment'
         end
       end
 
       Capybara.using_session('another_user') do
-        visit question_path(question)
-
         within "#answer-#{answer.id}" do
           expect(page).to have_content 'Text text'
         end
@@ -76,7 +73,6 @@ feature 'Create comment', %q{
 
       Capybara.using_session('user') do
         within "#answer-#{answer.id}" do
-          click_on 'New comment'
           fill_in 'Comment body', with: 'Text text'
           click_on 'Save comment'
         end
@@ -95,7 +91,7 @@ feature 'Create comment', %q{
   context 'Guest' do
     scenario 'tries to create comment to answer' do
       visit question_path(question)
-      expect(page).to have_no_link 'New comment'
+      expect(page).to have_no_button 'Save comment'
     end
   end
 end
