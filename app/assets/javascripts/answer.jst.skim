@@ -1,0 +1,20 @@
+- if gon.current_user_id != @answer.user_id
+  div id="answer-#{@answer.id}"
+    li.list-group-item
+      div id="rate-answer-#{@answer.id}"
+        = @answer.rating
+        - if @answer.best
+          span.badge.best-answer-bage The best answer
+      = @answer.body
+      - if gon.current_user_id == @question.user_id
+        a class='best-answer-link' data-remote='true' data-method='patch' href="/answers/#{@answer.id}/set_best" The best
+      - if gon.current_user_id
+        .vote
+          .vote-form [id = "vote-answer-#{@answer.id}", style = "display: #{vote ? 'none' : 'block'}"]
+            ul
+              li  
+                a href="../answers/#{@answer.id}/like"
+              li  
+                a href="../answers/#{@answer.id}/dislike"
+          .cancel-vote-form [id = "clear-vote-answer-#{@answer.id}", style = "display: #{(vote && gon.current_user.author_of?(vote)) ? 'block' : 'none'}"]
+            a href="../answers/#{@answer.id}/cancel_vote"

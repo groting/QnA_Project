@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_answer, only: [:destroy, :update, :select_best]
   before_action :set_question, only: [:create]
+  after_action  :stream_answer, only: [:create]
   
 
   def create
@@ -51,5 +52,14 @@ class AnswersController < ApplicationController
 
   def set_answer
    @answer = Answer.find(params[:id])
+  end
+
+  def stream_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+      "question_#{@question.id}_answers",
+      ApplicationController.render(json: { question: @question,
+                                           answer: @answer})
+    )
   end
 end
