@@ -79,8 +79,6 @@ feature 'Create comment', %q{
       end
 
       Capybara.using_session('guest') do
-        visit question_path(question)
-
         within "#answer-#{answer.id}" do
           expect(page).to have_content 'Text text'
         end

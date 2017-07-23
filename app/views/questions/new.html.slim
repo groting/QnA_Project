@@ -7,7 +7,7 @@
     = f.label :body
     = f.text_area :body, class: 'form-control'
   .form-group
-    = f.fields_for :attachments do |a|
+    = f.fields_for :attachments, @question.attachments.build do |a|
       = render 'common/attachment_fields', f: a
     .links
       = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'

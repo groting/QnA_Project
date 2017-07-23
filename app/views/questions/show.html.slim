@@ -33,13 +33,13 @@
       ul.answers-list
         = render @question.answers.best_order
     - if user_signed_in?
-      = form_for [@question, @answer], remote: true do |f|
+      = form_for [@question, @answer = @question.answers.new], remote: true do |f|
         .answer-errors
         .form-group
           = f.label :body, 'Answer'
           = f.text_area :body, class: 'form-control'
         .form-group
-          = f.fields_for :attachments do |a|
+          = f.fields_for :attachments, @answer.attachments.build do |a|
             = render 'common/attachment_fields', f: a
           .links
             = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'

@@ -6,17 +6,19 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:destroy, :update, :select_best]
   before_action :set_question, only: [:create]
   after_action  :stream_answer, only: [:create]
+
+  respond_to :js
+  respond_to :json, only: :create
   
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
 
   def update
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
+      respond_with @answer
     else
       redirect_to question_path(@answer.question), alert: 'You do not have permission to update this answer'
     end
@@ -24,7 +26,7 @@ class AnswersController < ApplicationController
 
   def destroy
     if current_user.author_of?(@answer)
-      @answer.destroy  
+      respond_with(@answer.destroy)  
     else
       redirect_to question_path(@answer.question), alert: 'You do not have permission to delete this answer'
     end 

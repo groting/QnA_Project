@@ -5,49 +5,41 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :update, :destroy]
   after_action  :stream_question, only: [:create]
+
+  respond_to :js
   
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = Answer.new
-    @answer.attachments.build
+    respond_with @question
   end
 
-  def new
-    @question = current_user.questions.new
-    @question.attachments.build
+  def new    
+    respond_with(@question = current_user.questions.new)
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    if @question.save
-      flash[:notice] = 'Your question successfully created.'
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
     if current_user.author_of?(@question)
       @question.update(question_params)
+      respond_with @question
     else
       redirect_to questions_path,
-      alert: 'You do not have permission to update this question'
+        alert: 'You do not have permission to update this question'
     end
   end
 
   def destroy
     if current_user.author_of?(@question)
-      @question.destroy
-      flash[:notice] = 'Your question successfully deleted'
+      respond_with(@question.destroy)
     else
-      flash[:notice] = 'You do not have permission to delete this question'
-    end
-    redirect_to questions_path
+      redirect_to questions_path, alert: 'You do not have permission to delete this question'
+    end 
   end
 
   private
