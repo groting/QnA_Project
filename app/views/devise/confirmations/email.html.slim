@@ -1,0 +1,7 @@
+p #{session['devise.provider'].capitalize} did not provide your email, please enter it:
+= form_tag new_user_email_path do
+  .form-group
+    = email_field_tag :email, '', class: 'form-control'
+  .form-group
+    = submit_tag 'Save', class: 'btn btn-primary'
+end

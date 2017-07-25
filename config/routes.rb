@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+
+  devise_scope :user do
+    post 'new_email', to: 'omniauth_callbacks#new_email', as: :new_user_email
+  end
 
   concern :votable do
     patch :like, on: :member
