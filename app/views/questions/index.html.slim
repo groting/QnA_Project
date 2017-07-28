@@ -1,4 +1,5 @@
 ul.list-group.questions-list
   - @questions.each do |question|
     li.list-group-item= link_to question.title, question_path(question)
-p= link_to 'Ask question', new_question_path
+- if can? :create, Answer
+  p= link_to 'Ask question', new_question_path

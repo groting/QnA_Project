@@ -6,14 +6,17 @@ module Voted
   end
 
   def like
-    change_vote(:like)
+    authorize! :like, @votable
+    change_vote(:like)   
   end
   
   def dislike
+    authorize! :dislike, @votable
     change_vote(:dislike)
   end
 
   def clear_vote
+    authorize! :clear_vote, @votable
     change_vote(:clear_vote)
   end
 
@@ -29,21 +32,12 @@ module Voted
 
   def change_vote(action)
     respond_to do |format|
-      unless current_user.author_of?(@votable)
-        @votable.public_send(action, current_user)
-        @votable.vote(current_user)
-        format.json { render json: { resource: controller_name.singularize ,
-                                     votable: @votable,
-                                     vote: @vote,
-                                     vote_value: @vote&.show_value } } 
-      else
-        format.json { render json:
-          { votable: @votable,
-            resource: controller_name.singularize ,
-            error: "You do not have permission to vote for this #{controller_name.singularize}" },
-                      status: :forbidden }
-        
-      end
+      @votable.public_send(action, current_user)
+      @votable.vote(current_user)
+      format.json { render json: { resource: controller_name.singularize ,
+                                   votable: @votable,
+                                   vote: @vote,
+                                   vote_value: @vote&.show_value } } 
     end
   end
 end

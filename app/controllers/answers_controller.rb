@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:create]
   after_action  :stream_answer, only: [:create]
 
+  authorize_resource
+
   respond_to :js
   respond_to :json, only: :create
   
@@ -16,29 +18,16 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-      respond_with @answer
-    else
-      redirect_to question_path(@answer.question), alert: 'You do not have permission to update this answer'
-    end
+    @answer.update(answer_params)
+    respond_with @answer
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      respond_with(@answer.destroy)  
-    else
-      redirect_to question_path(@answer.question), alert: 'You do not have permission to delete this answer'
-    end 
+    respond_with(@answer.destroy)  
   end
 
   def select_best
-    if current_user.author_of?(@answer.question)
-      @answer.select_best
-    else
-      redirect_to question_path(@answer.question),
-      alert: 'You do not have permission to select best answer'
-    end
+    @answer.select_best
   end
 
 

@@ -15,11 +15,11 @@ div id="answer-#{answer.id}"
     div class="answer-comments" id="answer-comments-#{answer.id}"
       = render 'common/comments', resource: answer
     .delete-edit-answer
-      - if current_user&.author_of?(answer.question)
+      - if can? :select_best, answer
         = link_to 'The best', select_best_answer_path(answer), remote: true, method: :patch,
           class: 'best-answer-link'
       '
-      - if current_user&.author_of?(answer)
+      - if can? :destroy, answer
         = link_to 'Delete answer', answer, remote: true, method: :delete, class: 'delete-answer-link',
           data: { answer_id: answer.id }
         '

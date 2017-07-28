@@ -1,4 +1,4 @@
 .comment id="comment-#{comment.id}"
   li = comment.body
-  - if current_user&.author_of?(comment)
+  - if can? :destroy, comment
     = link_to 'delete comment', comment, remote: true, method: :delete
