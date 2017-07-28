@@ -1,7 +1,7 @@
-- if current_user && !current_user.author_of?(resource)
+- if can? :like, resource
   .vote-form [id = "vote-#{resource.class.name.underscore}-#{resource.id}", style = "display: #{vote ? 'none' : 'block'}"]
     ul
       li = link_to "Like", polymorphic_url(resource, action: :like), method: :patch, remote: true
       li = link_to "Dislike", polymorphic_url(resource, action: :dislike), method: :patch, remote: true
-  .cancel-vote-form [id = "clear-vote-#{resource.class.name.underscore}-#{resource.id}", style = "display: #{(vote && current_user.author_of?(vote)) ? 'block' : 'none'}"]
+  .cancel-vote-form [id = "clear-vote-#{resource.class.name.underscore}-#{resource.id}", style = "display: #{(vote && can?(:clear_vote, resource)) ? 'block' : 'none'}"]
     = link_to "Recall vote", polymorphic_url(resource, action: :clear_vote), method: :patch, remote: true

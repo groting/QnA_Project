@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :update, :destroy]
   after_action  :stream_question, only: [:create]
 
+  authorize_resource
+
   respond_to :js
   
   def index
@@ -25,21 +27,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@question)
-      @question.update(question_params)
-      respond_with @question
-    else
-      redirect_to questions_path,
-        alert: 'You do not have permission to update this question'
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      respond_with(@question.destroy)
-    else
-      redirect_to questions_path, alert: 'You do not have permission to delete this question'
-    end 
+    respond_with(@question.destroy)
   end
 
   private

@@ -32,8 +32,8 @@ feature 'Create question', %q{
   end
 
   scenario 'Unauthenticated user create question' do
-    click_ask_question_link
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    visit questions_path
+    expect(page).to have_no_link 'Ask question'
   end
 
   context 'multiple sessions' do

@@ -9,7 +9,7 @@ feature 'User registrates', %q{
 
   scenario 'Unregistered user tries to registrate' do
     visit root_path
-    click_on 'Ask question'
+    click_on 'Sign in'
     click_on 'Sign up'
     fill_in 'Email', with: 'test@test.com'
     fill_in 'Password', with: '123456'

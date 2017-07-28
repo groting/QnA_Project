@@ -7,6 +7,7 @@ module Commented
     end
 
     def create_comment
+      authorize! :create_comment, @commentable
       @comment = Comment.new(commentable: @commentable, user_id: current_user.id,
                            body: comment_params[:body])
       @comment.save

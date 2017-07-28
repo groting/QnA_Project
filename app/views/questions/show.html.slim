@@ -7,7 +7,7 @@
         = render @question, vote: @question.vote(current_user)
       ul.question-attachments
         = render 'common/attachments', resource: @question
-      - if current_user&.author_of?(@question)
+      - if can? :destroy, @question
         .edit-delete
           = link_to 'Edit question', '', class: 'edit-question-link',
             data: { question_id: @question.id }
