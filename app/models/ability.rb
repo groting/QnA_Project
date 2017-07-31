@@ -39,5 +39,8 @@ class Ability
     can [:like, :dislike, :clear_vote], Question do |question|
       !user.author_of?(question)
     end
+
+    can :me, User
+    can :others, User
   end
 end
