@@ -41,6 +41,5 @@ class Ability
     end
 
     can :me, User
-    can :others, User
   end
 end

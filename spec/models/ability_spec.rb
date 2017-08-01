@@ -79,5 +79,7 @@ describe Ability do
 
     it { should be_able_to :destroy, question.attachments.first, user: user }
     it { should_not be_able_to :destroy, other_users_question.attachments.first, user: user }
+
+    it { should be_able_to :me, user: user }
   end
 end
