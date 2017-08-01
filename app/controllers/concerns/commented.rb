@@ -34,6 +34,6 @@ module Commented
     type = commentable.class
     id   = commentable.id
     CommentsChannel.broadcast_to "comment/#{type}-#{id}",
-      ApplicationController.render(json: @comment)
+      ApplicationController.render_with_serializer(current_user, json: @comment)
   end
 end
