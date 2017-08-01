@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'concerns/unauthenticated.rb'
 
 describe 'Profile API' do
   let(:me) { create(:user) }
@@ -7,17 +8,10 @@ describe 'Profile API' do
 
   describe 'GET #me' do
 
-    context 'unauthenticated' do
-
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles/me', as: :json
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles/me', as: :json, params: {access_token: '1234'}
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'unauthenticated' do
+      let(:request_to_resource) { get '/api/v1/profiles/me', as: :json }
+      let(:request_with_invalid_token) { get '/api/v1/profiles/me',
+          as: :json, params: { access_token: '12345' } }
     end
 
     context 'authorized' do
@@ -44,17 +38,10 @@ describe 'Profile API' do
 
   describe 'GET #index' do
 
-    context 'unauthenticated' do
-
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles', as: :json
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles', as: :json, params: {access_token: '1234'}
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'unauthenticated' do
+      let(:request_to_resource) { get '/api/v1/profiles', as: :json }
+      let(:request_with_invalid_token) { get '/api/v1/profiles',
+          as: :json, params: { access_token: '12345' } }
     end
 
     context 'authorized' do

@@ -49,7 +49,7 @@ class AnswersController < ApplicationController
     return if @answer.errors.any?
     ActionCable.server.broadcast(
       "question_#{@question.id}_answers",
-      ApplicationController.render(json: { question: @question,
+      ApplicationController.render_with_serializer(current_user, json: { question: @question,
                                            answer: @answer})
     )
   end
