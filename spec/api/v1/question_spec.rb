@@ -1,13 +1,11 @@
 require 'rails_helper'
-require_relative 'concerns/unauthenticated.rb'
 
 describe 'Questions API' do
   describe 'GET /index' do
 
-    it_behaves_like 'unauthenticated' do
-      let(:request_to_resource) { get '/api/v1/questions', as: :json }
-      let(:request_with_invalid_token) { get '/api/v1/questions',
-          as: :json, params: { access_token: '12345' } }
+    it_behaves_like 'API unauthenticated' do
+      let(:path) { '/api/v1/questions' }
+      let(:method) { :get }
     end
 
     context 'authenticated' do
@@ -52,10 +50,9 @@ describe 'Questions API' do
     let(:question) { create(:question) }
     let!(:comment) { create(:comment, commentable: question) }
 
-    it_behaves_like 'unauthenticated' do
-      let(:request_to_resource) { get api_v1_question_path(question), as: :json }
-      let(:request_with_invalid_token) { get api_v1_question_path(question),
-          as: :json, params: { access_token: '12345' } }
+    it_behaves_like 'API unauthenticated' do
+      let(:path) { api_v1_question_path(question) }
+      let(:method) { :get }
     end
 
     context 'authenticated' do
@@ -109,10 +106,9 @@ describe 'Questions API' do
 
   describe 'POST /create' do
 
-    it_behaves_like 'unauthenticated' do
-      let(:request_to_resource) { post api_v1_questions_path, as: :json }
-      let(:request_with_invalid_token) { post api_v1_questions_path,
-          as: :json, params: { access_token: '12345' } }
+    it_behaves_like 'API unauthenticated' do
+      let(:path) { api_v1_questions_path }
+      let(:method) { :post }
     end
 
     context 'authenticated' do

@@ -1,6 +1,4 @@
 require 'rails_helper'
-require_relative 'concerns/voted.rb'
-require_relative 'concerns/commented.rb'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }

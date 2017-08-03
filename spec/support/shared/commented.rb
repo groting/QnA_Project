@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 shared_examples_for 'commented' do |resource|
 
   let(:commentable) { create(resource) }
