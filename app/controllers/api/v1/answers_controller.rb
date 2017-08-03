@@ -1,6 +1,5 @@
 class Api::V1::AnswersController < Api::V1::BaseController
   before_action :set_question, only: [:index, :create]
-  before_action :current_resource_owner, only: :create
 
   authorize_resource
 
@@ -13,7 +12,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def create
-    respond_with(@question.answers.create(answer_params.merge(user: @current_resource_owner)),
+    respond_with(@question.answers.create(answer_params.merge(user: current_resource_owner)),
       serializer: SingleAnswerSerializer)
   end
 
@@ -24,6 +23,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+    params.require(:answer).permit(:body)
   end
 end
