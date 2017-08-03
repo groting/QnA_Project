@@ -1,6 +1,5 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
   authorize_resource
-  before_action :current_resource_owner, only: :create
 
   def index
     respond_with Question.all, each_serializer: QuestionsListSerializer
@@ -11,12 +10,12 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def create
-    respond_with @current_resource_owner.questions.create(question_params), serializer: SingleQuestionSerializer
+    respond_with current_resource_owner.questions.create(question_params), serializer: SingleQuestionSerializer
   end
 
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
+    params.require(:question).permit(:title, :body)
   end
 end

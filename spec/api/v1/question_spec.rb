@@ -77,7 +77,7 @@ describe 'Questions API' do
         end
       end
 
-      context 'comments' do
+      describe 'comments' do
         it 'included in question object' do
           expect(response.body).to have_json_size(1).at_path("question/comments")
         end
@@ -91,7 +91,7 @@ describe 'Questions API' do
         end
       end
 
-      context 'attachments' do
+      describe 'attachments' do
 
 
         it 'included in question object' do

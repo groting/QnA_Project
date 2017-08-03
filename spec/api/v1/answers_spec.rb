@@ -67,7 +67,7 @@ describe 'Answers API' do
         end
       end
 
-      context 'comments' do
+      describe 'comments' do
         it 'included in answer object' do
           expect(response.body).to have_json_size(1).at_path("answer/comments")
         end
@@ -81,7 +81,7 @@ describe 'Answers API' do
         end
       end
 
-      context 'attachments' do
+      describe 'attachments' do
 
 
         it 'included in answer object' do
