@@ -6,6 +6,11 @@ Rails.application.routes.draw do
     post 'new_email', to: 'omniauth_callbacks#new_email', as: :new_user_email
   end
 
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   concern :votable do
     patch :like, on: :member
     patch :dislike, on: :member
@@ -18,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     concerns :votable, :commentable
+    resources :subscriptions, only: [:create]
     resources :answers, shallow: true do
       patch :select_best, on: :member
       concerns :votable, :commentable
@@ -26,6 +32,7 @@ Rails.application.routes.draw do
 
   resources :attachments, only: [:destroy]
   resources :comments, only: [:destroy]
+  resources :subscriptions, only: [:destroy]
   
   namespace :api do
     namespace :v1 do

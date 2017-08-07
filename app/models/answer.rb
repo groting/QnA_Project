@@ -13,10 +13,23 @@ class Answer < ApplicationRecord
 
   scope :best_order, -> {order('best DESC')}
 
+  after_create :notify_subscribers
+  after_create :create_subscription_for_author
+
   def select_best
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
     end
+  end
+
+  private
+
+  def notify_subscribers
+    AnswerNoticeJob.perform_later(self)
+  end
+
+  def create_subscription_for_author
+    Subscription.find_or_initialize_by(user: self.user, question: self.question)
   end
 end

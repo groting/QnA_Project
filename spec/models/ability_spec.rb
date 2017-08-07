@@ -81,5 +81,8 @@ describe Ability do
     it { should_not be_able_to :destroy, other_users_question.attachments.first, user: user }
 
     it { should be_able_to :me, user: user }
+
+    it { should be_able_to :create, Subscription }
+    it { should be_able_to :destroy, Subscription, user: user }
   end
 end
