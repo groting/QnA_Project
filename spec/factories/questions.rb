@@ -17,6 +17,10 @@ FactoryGirl.define do
       after(:create) do |question, evaluator|
         create_list(:answer, evaluator.answers_count, question: question, user: question.user)
       end
+    end
+
+    factory :old_question do
+      created_at { 1.day.ago }
     end 
   end
 end

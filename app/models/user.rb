@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :votes
   has_many :comments
   has_many :authorizations
+  has_many :subscriptions, dependent: :destroy
 
   def author_of?(entity)
     entity.user_id == id
@@ -29,6 +30,12 @@ class User < ApplicationRecord
     user.authorizations.create(provider: auth['devise.provider'], uid: auth['devise.uid'].to_s)
     auth['devise.need_to_confirm'] ? user.send_confirmation_instructions : user.skip_confirmation!
     user
+  end
+
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later
+    end
   end
 
   protected
