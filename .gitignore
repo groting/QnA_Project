@@ -24,3 +24,6 @@ config/database.yml
 /public/uploads/*
 
 .ruby-gemset
+
+config/*sphinx.conf
+db/sphinx/*

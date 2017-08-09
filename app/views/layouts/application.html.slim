@@ -31,6 +31,14 @@ html lang="en"
                 li= link_to current_user.email, '#'
               - else
                 li= link_to 'Sign in', new_user_session_path
+            = form_tag '/search', method: :get, class: 'navbar-form navbar-left'
+              .form-group
+                =text_field_tag 'search', nil, class: 'form-control' , placeholder: 'Search'
+              .form-group
+                =select_tag :resource, options_for_select(%w(all questions answers comments users)),
+                    { class: 'form-control' }
+              .form-group
+                =submit_tag 'Find', class: 'btn btn-default'
 
     .container
       .row

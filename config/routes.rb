@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :search, only: :show
+
   resources :attachments, only: [:destroy]
   resources :comments, only: [:destroy]
   resources :subscriptions, only: [:destroy]
