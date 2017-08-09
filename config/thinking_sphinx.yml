@@ -1,0 +1,12 @@
+development: &my_settings
+  min_prefix_len: 0
+  min_infix_len: 1
+  min_word_len: 1
+  morphology: stem_ru
+  
+test:
+  <<: *my_settings
+  mysql41: 9307
+
+production:
+  <<: *my_settings
