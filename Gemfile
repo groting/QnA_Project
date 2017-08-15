@@ -58,7 +58,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'whenever'
 gem 'dotenv'
-gem 'dotenv-rails', require: 'dotenv/deployment'
+gem 'dotenv-rails'
 
 
 group :development, :test do
