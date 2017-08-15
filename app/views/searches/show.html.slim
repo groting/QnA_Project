@@ -1,5 +1,5 @@
 h1
   ' #{@search_string} found in:
-+ul.list-unstyled
+ul.list-unstyled
   - @result.each do |obj|
     = render "#{obj.class.name.downcase}", object: obj
