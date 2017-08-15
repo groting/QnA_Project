@@ -7,9 +7,10 @@ set :repo_url, "git@github.com:groting/QnA_Project.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/ubuntu/qna"
 set :deploy_user, "ubuntu"
+set :sidekiq_queue, ["default", "mailers"]
 
 # Default value for :linked_files is []
-append :linked_files, "config/database.yml", ".env"
+append :linked_files, "config/database.yml", "config/.env"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads"
