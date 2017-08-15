@@ -57,6 +57,8 @@ gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'whenever'
+gem 'dotenv'
+gem 'dotenv-rails', require: 'dotenv/deployment'
 
 
 group :development, :test do
