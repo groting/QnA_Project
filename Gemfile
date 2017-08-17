@@ -59,6 +59,7 @@ gem 'thinking-sphinx'
 gem 'whenever'
 gem 'dotenv'
 gem 'dotenv-rails'
+gem 'unicorn'
 
 
 group :development, :test do
@@ -86,6 +87,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test, :development do
