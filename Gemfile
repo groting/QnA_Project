@@ -60,6 +60,7 @@ gem 'whenever'
 gem 'dotenv'
 gem 'dotenv-rails'
 gem 'unicorn'
+gem 'redis-rails'
 
 
 group :development, :test do

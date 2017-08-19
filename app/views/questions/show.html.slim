@@ -1,53 +1,54 @@
-.panel.panel-default
-  .panel-heading
-    = @question.title
-  .panel-body
-    div class = "question" data-id = "#{@question.id}" id = "question-#{@question.id}"
-      .question-body
-        = render @question, vote: @question.vote(current_user)
-      ul.question-attachments
-        = render 'common/attachments', resource: @question
-      - if can?(:create, Subscription.new(question: @question, user: current_user))
-        .subscribe 
-          - unless Subscription.exists?(user: current_user, question: @question)
-            = link_to "Subscribe", question_subscriptions_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs'
-          - else
-            = link_to "Unsubscribe", subscription_path(@question), method: :delete, remote: true, class: 'btn btn-danger btn-xs'
-      - if can? :destroy, @question
-        .edit-delete
-          = link_to 'Edit question', '', class: 'edit-question-link',
-            data: { question_id: @question.id }
-          '
-          = link_to 'Delete question', @question, method: :delete
-          = form_for @question, remote: true, html: { id: 'edit-question' } do |f|
-            .form-group
-              = f.label :title, 'Question tilte'
-              = f.text_field :title, class: 'form-control'
-            .form-group
-              = f.label :body, 'Question body'
-              = f.text_area :body, class: 'form-control'
-            .form-group
-              = f.fields_for :attachments do |a|
-                = render 'common/attachment_fields', f: a
-              .links
-                = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'
-            .form-group
-              = f.submit 'Save question', class: 'btn btn-primary', id: 'question-update-submit'
+- cache @question
+  .panel.panel-default
+    .panel-heading
+      = @question.title
+    .panel-body
+      div class = "question" data-id = "#{@question.id}" id = "question-#{@question.id}"
+        .question-body
+          = render @question, vote: @question.vote(current_user)
+        ul.question-attachments
+          = render 'common/attachments', resource: @question
+        - if can?(:create, Subscription.new(question: @question, user: current_user))
+          .subscribe 
+            - unless Subscription.exists?(user: current_user, question: @question)
+              = link_to "Subscribe", question_subscriptions_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs'
+            - else
+              = link_to "Unsubscribe", subscription_path(@question), method: :delete, remote: true, class: 'btn btn-danger btn-xs'
+        - if can? :destroy, @question
+          .edit-delete
+            = link_to 'Edit question', '', class: 'edit-question-link',
+              data: { question_id: @question.id }
+            '
+            = link_to 'Delete question', @question, method: :delete
+            = form_for @question, remote: true, html: { id: 'edit-question' } do |f|
+              .form-group
+                = f.label :title, 'Question tilte'
+                = f.text_field :title, class: 'form-control'
+              .form-group
+                = f.label :body, 'Question body'
+                = f.text_area :body, class: 'form-control'
+              .form-group
+                = f.fields_for :attachments do |a|
+                  = render 'common/attachment_fields', f: a
+                .links
+                  = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'
+              .form-group
+                = f.submit 'Save question', class: 'btn btn-primary', id: 'question-update-submit'
 
-    h4 Answers
-    .answers
-      ul.answers-list
-        = render @question.answers.best_order
-    - if user_signed_in?
-      = form_for [@question, @answer = @question.answers.new], remote: true do |f|
-        .answer-errors
-        .form-group
-          = f.label :body, 'Answer'
-          = f.text_area :body, class: 'form-control'
-        .form-group
-          = f.fields_for :attachments, @answer.attachments.build do |a|
-            = render 'common/attachment_fields', f: a
-          .links
-            = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'
-        .form-group
-          = f.submit 'Create answer', class: 'btn btn-primary'
+      h4 Answers
+      .answers
+        ul.answers-list
+          = render @question.answers.best_order
+      - if user_signed_in?
+        = form_for [@question, @answer = @question.answers.new], remote: true do |f|
+          .answer-errors
+          .form-group
+            = f.label :body, 'Answer'
+            = f.text_area :body, class: 'form-control'
+          .form-group
+            = f.fields_for :attachments, @answer.attachments.build do |a|
+              = render 'common/attachment_fields', f: a
+            .links
+              = link_to_add_association 'add file', f, :attachments, partial: 'common/attachment_fields'
+          .form-group
+            = f.submit 'Create answer', class: 'btn btn-primary'

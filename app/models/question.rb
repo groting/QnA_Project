@@ -11,6 +11,8 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
+  default_scope { order(:created_at) }
+
   scope :lastday, -> { where(updated_at: Time.current.yesterday.all_day) }
 
   after_create :create_subscrition_for_author

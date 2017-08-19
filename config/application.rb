@@ -22,6 +22,8 @@ module Qna
     # Override any existing variables if an environment-specific file exists
     Dotenv.overload *Dir.glob(Rails.root.join("config/**/*.env.#{Rails.env}"), File::FNM_DOTMATCH)
 
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 60.minutes }
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
