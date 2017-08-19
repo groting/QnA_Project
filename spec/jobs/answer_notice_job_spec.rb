@@ -9,7 +9,7 @@ RSpec.describe AnswerNoticeJob, type: :job do
 
   it 'should send email to subscriber' do
     [author, subscribed_user].each do |subscriber|
-      expect(SubscriptionMailer).to receive(:notice).with(subscriber, resource: answer).and_call_original
+      expect(SubscriptionMailer).to receive(:notice).with(subscriber, answer).and_call_original
     end
     AnswerNoticeJob.perform_now answer
   end
