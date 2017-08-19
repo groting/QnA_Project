@@ -1,5 +1,6 @@
-ul.list-group.questions-list
-  - @questions.each do |question|
-    li.list-group-item= link_to question.title, question_path(question)
-- if can? :create, Answer
-  p= link_to 'Ask question', new_question_path
+- cache @questions
+  ul.list-group.questions-list
+    - @questions.each do |question|
+      li.list-group-item= link_to question.title, question_path(question)
+  - if can? :create, Answer
+    p= link_to 'Ask question', new_question_path
